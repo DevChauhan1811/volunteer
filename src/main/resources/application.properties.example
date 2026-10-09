@@ -1,0 +1,15 @@
+# ================================================================
+# Database Configuration Template for Online Volunteer Platform
+# Copy this file to application.properties and provide your password.
+# ================================================================
+db.host=localhost
+db.port=3306
+db.name=volunteer_platform_db
+db.username=root
+db.password=YOUR_MYSQL_PASSWORD_HERE
+
+# JDBC Connection Pool / Optimization Properties
+db.useSSL=false
+db.allowPublicKeyRetrieval=true
+db.serverTimezone=UTC
+db.characterEncoding=UTF-8

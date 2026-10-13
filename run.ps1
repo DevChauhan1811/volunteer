@@ -1,6 +1,6 @@
-# VolunteerPulse PowerShell Launcher
+# MyVolunteer PowerShell Launcher
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "  VOLUNTEERPULSE PLATFORM - LAUNCHING WEB APPLICATION" -ForegroundColor Cyan
+Write-Host "  MYVOLUNTEER PLATFORM - LAUNCHING WEB APPLICATION" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 # 1. Check MySQL

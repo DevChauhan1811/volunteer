@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VolunteerPulse — Online Volunteer Management Platform</title>
+  <meta name="description" content="Find meaningful volunteer opportunities, connect with verified nonprofits, and track verified service hours in your local community.">
+  <link rel="stylesheet" href="css/style.css?v=1.1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+</head>
+<body>
+
+  <!-- Demo Evaluation Role Switcher -->
+  <div class="demo-top-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="demo-badge">Live Platform Demo</span>
+      <span style="opacity: 0.85;">Connected to MySQL & Java REST Service at <code>localhost:8080</code></span>
+    </div>
+    <div class="demo-role-switcher">
+      <span style="font-size: 0.75rem; color: #A3BFB0;">Switch Active Profile:</span>
+      <button class="demo-role-btn active" data-role="GUEST">👤 Public Guest</button>
+      <button class="demo-role-btn" data-role="VOLUNTEER">🙋 Volunteer (Alice)</button>
+      <button class="demo-role-btn" data-role="ORGANIZATION">🏢 Org (Green Earth)</button>
+      <button class="demo-role-btn" data-role="ADMIN">🛡️ Admin (System)</button>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" onclick="navigateTo('home'); return false;">
+        <div class="brand-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+        </div>
+        <span>VolunteerPulse</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#" class="nav-link active" data-target="home">Home</a></li>
+          <li><a href="#explore-opportunities" class="nav-link" data-target="home">Opportunities</a></li>
+          <li><a href="#how-it-works" class="nav-link" data-target="home">How It Works</a></li>
+          <li><a href="#featured-orgs" class="nav-link" data-target="home">Organizations</a></li>
+          <li><a href="#impact" class="nav-link" data-target="home">Our Impact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Guest Auth Buttons -->
+        <div id="nav-auth-buttons" style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary btn-sm" onclick="openModal('login-modal')">Sign In</button>
+          <button class="btn btn-primary btn-sm" onclick="openModal('register-modal')">Join as Volunteer</button>
+        </div>
+
+        <!-- Authenticated User Dropdown -->
+        <div id="nav-user-menu" class="user-menu-trigger" style="display: none;" onclick="openUserDashboard()">
+          <div class="avatar-circle" id="nav-avatar-initials">AJ</div>
+          <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.2;">
+            <span class="user-meta-name" id="nav-user-name">Alice Johnson</span>
+            <span class="user-role-tag" id="nav-user-role">VOLUNTEER</span>
+          </div>
+          <button class="btn btn-sm" style="padding: 2px 8px; font-size: 0.75rem; color: var(--color-danger);" onclick="event.stopPropagation(); switchRole('GUEST');">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       VIEW 1: PUBLIC HOMEPAGE & LANDING EXPERIENCE
+       ====================================================================== -->
+  <main id="home-view">
+
+    <!-- Photographic Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>Over 2,400+ Verified Service Hours Contributed</span>
+          </div>
+          <h1 class="hero-headline">
+            Small Acts. <br><span>Lasting Impact.</span>
+          </h1>
+          <p class="hero-subhead">
+            Find meaningful volunteer opportunities and help build stronger, more resilient communities — one authentic action at a time.
+          </p>
+          <div class="hero-actions">
+            <a href="#explore-opportunities" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Explore Opportunities
+            </a>
+            <button class="btn btn-secondary btn-lg" onclick="openModal('register-modal')">
+              Join as a Volunteer
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual-card">
+          <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1200&q=80" 
+               alt="A group of diverse volunteers working together smiling" 
+               class="hero-img">
+          <div class="hero-float-badge">
+            <div class="hero-float-text">
+              <h4>Community Reforestation & Relief</h4>
+              <p>Green Earth Alliance • 25 Registered Spots</p>
+            </div>
+            <span class="opp-status-badge badge-approved">Active Drive</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filters Bar -->
+    <section class="container" style="position: relative; z-index: 20;">
+      <div class="search-bar-wrapper">
+        <form class="search-form" onsubmit="event.preventDefault(); loadOpportunities();">
+          <div class="search-field-group">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="search-keyword-input" class="search-input" placeholder="Search by title, cause, or keywords...">
+          </div>
+
+          <div class="search-field-group">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <select id="search-location-select" class="search-select">
+              <option value="">All Locations</option>
+              <option value="Riverside Park">Riverside Park</option>
+              <option value="Metro Warehouse">Metro Warehouse</option>
+              <option value="North Shore Beach">North Shore Beach</option>
+              <option value="Downtown Youth Center">Downtown Youth Center</option>
+            </select>
+          </div>
+
+          <div class="search-field-group">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <input type="date" id="search-date-input" class="search-input">
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Find Opportunities
+          </button>
+        </form>
+
+        <!-- Category Filter Chips -->
+        <div class="category-chips">
+          <button class="category-chip active" data-category="All">🌱 All Opportunities</button>
+          <button class="category-chip" data-category="Environment">🌲 Environment & Forestry</button>
+          <button class="category-chip" data-category="Community Relief">🍲 Community Relief & Food</button>
+          <button class="category-chip" data-category="Conservation">🌊 Marine & Conservation</button>
+          <button class="category-chip" data-category="Humanitarian">🧤 Humanitarian & Shelters</button>
+          <button class="category-chip" data-category="Education">📚 Youth Mentorship</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform Impact Metrics -->
+    <section class="stats-section" id="impact">
+      <div class="container stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" id="stat-volunteers">3</div>
+          <div class="stat-label">Active Volunteers</div>
+          <div class="stat-source-tag">Live Database Verified</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="stat-orgs">2</div>
+          <div class="stat-label">Certified Nonprofits</div>
+          <div class="stat-source-tag">Vetted Community Partners</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="stat-hours">7.5 hrs</div>
+          <div class="stat-label">Verified Service Hours</div>
+          <div class="stat-source-tag">Audited Activity Records</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="stat-opportunities">4</div>
+          <div class="stat-label">Approved Causes</div>
+          <div class="stat-source-tag">100% Free to Join</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Opportunities Grid Section -->
+    <section class="section-padding" id="explore-opportunities">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Featured Causes</span>
+          <h2 class="section-title">Discover Volunteering Opportunities</h2>
+          <p class="section-subtitle">
+            Explore carefully vetted community projects looking for passionate helpers. Real locations, verified hosts, and transparent capacity.
+          </p>
+        </div>
+
+        <div class="opportunities-grid" id="opportunities-container">
+          <!-- Dynamically populated via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Popular Categories Section -->
+    <section class="section-padding" style="background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Areas of Impact</span>
+          <h2 class="section-title">Find Causes You Care About</h2>
+          <p class="section-subtitle">
+            Whether you are passionate about protecting nature, feeding the hungry, or educating kids, there is a role for you.
+          </p>
+        </div>
+
+        <div class="category-cards-grid">
+          <div class="category-card" onclick="filterByCategory('Environment')">
+            <div class="cat-icon-box">🌲</div>
+            <h3>Environmental Care</h3>
+            <p>Tree planting, park restoration, neighborhood garden tending, and urban greenery.</p>
+          </div>
+          <div class="category-card" onclick="filterByCategory('Community Relief')">
+            <div class="cat-icon-box">🍲</div>
+            <h3>Hunger & Food Relief</h3>
+            <p>Warehouse packaging, soup kitchens, pantry stocking, and grocery distribution.</p>
+          </div>
+          <div class="category-card" onclick="filterByCategory('Conservation')">
+            <div class="cat-icon-box">🌊</div>
+            <h3>Water & Conservation</h3>
+            <p>Beach cleanups, coastal estuary preservation, and plastic pollution documentation.</p>
+          </div>
+          <div class="category-card" onclick="filterByCategory('Humanitarian')">
+            <div class="cat-icon-box">🧤</div>
+            <h3>Winter & Shelter Aid</h3>
+            <p>Coat drives, blanket collection, and essential care packaging for vulnerable neighbors.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section-padding" id="how-it-works">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Simple & Transparent</span>
+          <h2 class="section-title">How VolunteerPulse Works</h2>
+          <p class="section-subtitle">
+            Three simple steps to transform your spare time into lasting community impact.
+          </p>
+        </div>
+
+        <div class="how-it-works-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3>Discover Opportunities</h3>
+            <p>Browse listings filtered by category, date, and neighborhood. Review requirements and available spots in real-time.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h3>Sign Up in Seconds</h3>
+            <p>Reserve your slot with one click. Automatic duplicate protection and capacity locking guarantee your attendance.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3>Log Verified Hours</h3>
+            <p>Submit your service hours for instant nonprofit verification. Build an official community service transcript.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Nonprofit Organizations -->
+    <section class="section-padding" id="featured-orgs" style="background: var(--color-surface); border-top: 1px solid var(--color-border);">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Trusted Partners</span>
+          <h2 class="section-title">Partner Organizations</h2>
+          <p class="section-subtitle">
+            Connecting directly with verified organizations doing on-the-ground work in local neighborhoods.
+          </p>
+        </div>
+
+        <div class="orgs-grid">
+          <div class="org-card">
+            <div class="org-logo-box">GE</div>
+            <div class="org-content">
+              <h3>Green Earth Alliance</h3>
+              <p>Dedicated to urban reforestation, riverbed cleanup, and sustainable community gardens. Partnered since 2024.</p>
+              <div class="org-contact-tag">contact@greenearth.org • +1-555-0101</div>
+            </div>
+          </div>
+
+          <div class="org-card">
+            <div class="org-logo-box">MF</div>
+            <div class="org-content">
+              <h3>Metro Community Food Bank</h3>
+              <p>Providing essential nutritious groceries, hot meals, and family packages across 14 neighborhood collection hubs.</p>
+              <div class="org-contact-tag">info@metrofoodbank.org • +1-555-0202</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Community Voices</span>
+          <h2 class="section-title">Stories from the Field</h2>
+          <p class="section-subtitle">
+            Demonstration reflections from volunteers actively serving in community programs.
+          </p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <p class="quote-text">
+              "Being able to plant 300 trees alongside other students was unforgettable. The platform made signing up and tracking my university service hours completely effortless."
+            </p>
+            <div class="author-info">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alice Johnson" class="author-avatar">
+              <div>
+                <div class="author-name">Alice Johnson</div>
+                <div class="author-role">Student Volunteer (4.0 hrs verified)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="quote-text">
+              "VolunteerPulse solved our biggest headache: managing volunteer signups and confirming attendance without confusing spreadsheets. Our warehouse food packing ran like clockwork!"
+            </p>
+            <div class="author-info">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Marcus Vance" class="author-avatar">
+              <div>
+                <div class="author-name">Marcus Vance</div>
+                <div class="author-role">Coordinator, Metro Food Bank</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="quote-text">
+              "The beach cleanup drive was organized brilliantly. Having clear start and end times with transparent capacity limits kept everyone safe and impactful."
+            </p>
+            <div class="author-info">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80" alt="Clara Davis" class="author-avatar">
+              <div>
+                <div class="author-name">Clara Davis</div>
+                <div class="author-role">Environmental Advocate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="container" style="margin-bottom: 80px;">
+      <div class="cta-banner">
+        <h2 class="cta-headline">Ready to Make a Real Difference?</h2>
+        <p class="cta-text">
+          Join thousands of community heroes building a cleaner, kinder world. Free for volunteers, free for community non-profits.
+        </p>
+        <div class="cta-buttons">
+          <button class="btn btn-white btn-lg" onclick="openModal('register-modal')">
+            Register as Volunteer
+          </button>
+          <a href="#explore-opportunities" class="btn btn-secondary btn-lg" style="color: #FFFFFF; border-color: rgba(255,255,255,0.4);">
+            Browse Live Opportunities
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       VIEW 2: VOLUNTEER DASHBOARD
+       ====================================================================== -->
+  <section id="volunteer-view" class="dashboard-view-container container">
+    <div class="dashboard-header">
+      <div class="dashboard-welcome">
+        <h2>Welcome back, <span id="vol-welcome-name">Alice</span>! 👋</h2>
+        <p>Track your commitments, discover new causes, and log your verified service hours.</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="openModal('log-hours-modal')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Log Service Hours
+        </button>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="dashboard-metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon-box">⏱️</div>
+        <div>
+          <div class="metric-val" id="vol-hours-count">4.0 hrs</div>
+          <div class="metric-lbl">Total Verified Hours</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">📅</div>
+        <div>
+          <div class="metric-val" id="vol-signups-count">2</div>
+          <div class="metric-lbl">Active Registrations</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">🏆</div>
+        <div>
+          <div class="metric-val">Level 2</div>
+          <div class="metric-lbl">Volunteer Tier</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">🌟</div>
+        <div>
+          <div class="metric-val">100%</div>
+          <div class="metric-lbl">Profile Completion</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Volunteer Navigation Tabs -->
+    <div class="dashboard-tabs">
+      <button class="dashboard-tab-btn active" onclick="switchDashboardTab(this, 'vol-tab-signups')">My Sign-Ups</button>
+      <button class="dashboard-tab-btn" onclick="switchDashboardTab(this, 'vol-tab-hours')">Hours History</button>
+      <button class="dashboard-tab-btn" onclick="navigateTo('home')">Browse More Causes</button>
+    </div>
+
+    <!-- Tab 1: My Signups -->
+    <div id="vol-tab-signups" class="tab-pane active">
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h3>Your Upcoming Commitments</h3>
+          <span style="font-size: 0.8125rem; color: var(--color-text-muted);">Capacity locked via MySQL</span>
+        </div>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Opportunity Title</th>
+              <th>Host Organization</th>
+              <th>Event Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="vol-signups-table-body">
+            <!-- Populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 2: Hours History -->
+    <div id="vol-tab-hours" class="tab-pane">
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h3>Logged Volunteer Service Hours</h3>
+          <button class="btn btn-secondary btn-sm" onclick="openModal('log-hours-modal')">+ Log New Hours</button>
+        </div>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Event Title</th>
+              <th>Date Worked</th>
+              <th>Hours</th>
+              <th>Description of Duties</th>
+              <th>Verification Status</th>
+            </tr>
+          </thead>
+          <tbody id="vol-hours-table-body">
+            <!-- Populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 3: ORGANIZATION DASHBOARD
+       ====================================================================== -->
+  <section id="organization-view" class="dashboard-view-container container">
+    <div class="dashboard-header">
+      <div class="dashboard-welcome">
+        <h2>Organization Portal: <span id="org-welcome-name">Green Earth Alliance</span> 🏢</h2>
+        <p>Manage your listings, review volunteer signups, and verify hours completed.</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="openModal('create-opportunity-modal')">
+          + Post New Opportunity
+        </button>
+      </div>
+    </div>
+
+    <div class="dashboard-metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon-box">📋</div>
+        <div>
+          <div class="metric-val">2</div>
+          <div class="metric-lbl">Active Causes</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">👥</div>
+        <div>
+          <div class="metric-val">3</div>
+          <div class="metric-lbl">Total Volunteers Signed</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">⏳</div>
+        <div>
+          <div class="metric-val">1</div>
+          <div class="metric-lbl">Pending Hours to Verify</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">✅</div>
+        <div>
+          <div class="metric-val">Verified</div>
+          <div class="metric-lbl">Nonprofit Status</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-tabs">
+      <button class="dashboard-tab-btn active" onclick="switchDashboardTab(this, 'org-tab-listings')">Our Listings</button>
+      <button class="dashboard-tab-btn" onclick="switchDashboardTab(this, 'org-tab-verify')">Verify Volunteer Hours</button>
+    </div>
+
+    <!-- Org Listings Tab -->
+    <div id="org-tab-listings" class="tab-pane active">
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h3>Opportunities Managed by Your Organization</h3>
+          <button class="btn btn-primary btn-sm" onclick="openModal('create-opportunity-modal')">+ Create Listing</button>
+        </div>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Capacity</th>
+              <th>Moderation Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="org-listings-table-body">
+            <!-- Populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Verify Hours Tab -->
+    <div id="org-tab-verify" class="tab-pane">
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h3>Volunteer Hours Awaiting Approval</h3>
+        </div>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Volunteer</th>
+              <th>Opportunity</th>
+              <th>Date</th>
+              <th>Hours</th>
+              <th>Duties Performed</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="org-verify-hours-table-body">
+            <!-- Populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       VIEW 4: ADMIN DASHBOARD
+       ====================================================================== -->
+  <section id="admin-view" class="dashboard-view-container container">
+    <div class="dashboard-header">
+      <div class="dashboard-welcome">
+        <h2>Administrative Moderation Center 🛡️</h2>
+        <p>Review new opportunity submissions, moderate community listings, and audit users.</p>
+      </div>
+      <div>
+        <span class="demo-badge">Full Superadmin Access</span>
+      </div>
+    </div>
+
+    <div class="dashboard-metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon-box">⚖️</div>
+        <div>
+          <div class="metric-val">1</div>
+          <div class="metric-lbl">Pending Moderation</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">👥</div>
+        <div>
+          <div class="metric-val">6</div>
+          <div class="metric-lbl">Total Registered Users</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">🏢</div>
+        <div>
+          <div class="metric-val">2</div>
+          <div class="metric-lbl">Partner Nonprofits</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">🔒</div>
+        <div>
+          <div class="metric-val">Healthy</div>
+          <div class="metric-lbl">Database State</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-tabs">
+      <button class="dashboard-tab-btn active" onclick="switchDashboardTab(this, 'admin-tab-moderation')">Opportunity Moderation Queue</button>
+      <button class="dashboard-tab-btn" onclick="switchDashboardTab(this, 'admin-tab-users')">User Management</button>
+    </div>
+
+    <!-- Moderation Tab -->
+    <div id="admin-tab-moderation" class="tab-pane active">
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h3>Pending Opportunity Listings</h3>
+        </div>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Submitting Organization</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Moderation Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-moderation-table-body">
+            <!-- Populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="admin-tab-users" class="tab-pane">
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h3>System User Directory</h3>
+        </div>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-table-body">
+            <!-- Populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h4>VolunteerPulse</h4>
+        <p>A full-stack modern volunteer coordination platform connecting certified organizations with dedicated individuals to enact measurable community change.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul class="footer-links">
+          <li><a href="#explore-opportunities" onclick="navigateTo('home')">Live Causes</a></li>
+          <li><a href="#how-it-works" onclick="navigateTo('home')">How It Works</a></li>
+          <li><a href="#featured-orgs" onclick="navigateTo('home')">Partner Organizations</a></li>
+          <li><a href="#impact" onclick="navigateTo('home')">Verified Impact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>For Organizations</h5>
+        <ul class="footer-links">
+          <li><a href="#" onclick="switchRole('ORGANIZATION'); return false;">Organization Portal</a></li>
+          <li><a href="#" onclick="openModal('create-opportunity-modal'); return false;">Post Volunteer Drive</a></li>
+          <li><a href="#" onclick="switchRole('ORGANIZATION'); return false;">Hours Verification</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Access</h5>
+        <ul class="footer-links">
+          <li><a href="#" onclick="openModal('login-modal'); return false;">Volunteer Login</a></li>
+          <li><a href="#" onclick="openModal('register-modal'); return false;">Create Free Account</a></li>
+          <li><a href="#" onclick="switchRole('ADMIN'); return false;">Admin Portal</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>© 2026 VolunteerPulse Platform. Layered Java MVC & REST Architecture with MySQL.</div>
+      <div>Designed for modern community engagement.</div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       MODALS & DIALOGS
+       ====================================================================== -->
+
+  <!-- Modal 1: Opportunity Details -->
+  <div id="opp-details-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="opp-image-box" style="height: 240px;">
+        <img id="modal-opp-img" src="" alt="Opportunity Cover" class="opp-cover-img">
+        <span id="modal-opp-category" class="opp-category-badge">Category</span>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 0.875rem; color: var(--color-primary); font-weight: 700; margin-bottom: 6px;" id="modal-opp-org">Organization Name</div>
+        <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 12px;" id="modal-opp-title">Drive Title</h2>
+        <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: 24px;" id="modal-opp-desc">Full description goes here...</p>
+
+        <div style="background: var(--color-bg); padding: 16px; border-radius: var(--radius-md); margin-bottom: 24px; border: 1px solid var(--color-border);">
+          <div style="margin-bottom: 8px;"><strong>📅 Date & Time:</strong> <span id="modal-opp-date"></span></div>
+          <div style="margin-bottom: 8px;"><strong>📍 Location:</strong> <span id="modal-opp-loc"></span></div>
+          <div><strong>👥 Spots:</strong> <span id="modal-opp-capacity"></span></div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button class="btn btn-secondary" onclick="closeModal('opp-details-modal')">Close</button>
+          <button id="modal-opp-signup-btn" class="btn btn-primary">Sign Up for this Cause</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Sign In -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3>Sign In to VolunteerPulse</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Quick 1-Click Demo Buttons -->
+        <div style="background: #F8FAFC; border: 1px dashed var(--color-border); padding: 12px; border-radius: var(--radius-md); margin-bottom: 20px;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 8px;">QUICK DEMO ONE-CLICK FILL:</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="fillLoginForm('alice.johnson@example.com', 'Password@123')">Alice (Volunteer)</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="fillLoginForm('contact@greenearth.org', 'Password@123')">Green Earth (Org)</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="fillLoginForm('admin@platform.com', 'Password@123')">Admin</button>
+          </div>
+        </div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-control" required placeholder="alice.johnson@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 18px; font-size: 0.875rem; color: var(--color-text-muted);">
+          Don't have an account? <a href="#" style="color: var(--color-primary); font-weight: 600;" onclick="closeModal('login-modal'); openModal('register-modal'); return false;">Register free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Register -->
+  <div id="register-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3>Create Your Account</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="register-form">
+          <div class="form-group">
+            <label class="form-label" for="reg-fullname">Full Name / Organization Contact</label>
+            <input type="text" id="reg-fullname" class="form-control" required placeholder="e.g. Jordan Miller">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" required placeholder="jordan@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password (minimum 6 characters)</label>
+            <input type="password" id="reg-password" class="form-control" required placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-role">I want to register as:</label>
+            <select id="reg-role" class="form-control" onchange="toggleOrgNameField(this.value)">
+              <option value="VOLUNTEER">🙋 Individual Volunteer</option>
+              <option value="ORGANIZATION">🏢 Community Organization / Nonprofit</option>
+            </select>
+          </div>
+          <div class="form-group" id="reg-orgname-group" style="display: none;">
+            <label class="form-label" for="reg-orgname">Organization Name</label>
+            <input type="text" id="reg-orgname" class="form-control" placeholder="e.g. Sunrise Youth Foundation">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Log Hours -->
+  <div id="log-hours-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>Log Volunteer Service Hours</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="log-hours-form">
+          <div class="form-group">
+            <label class="form-label" for="hours-opp-select">Opportunity / Cause</label>
+            <select id="hours-opp-select" class="form-control" required>
+              <option value="1">Community Tree Planting Drive (Green Earth Alliance)</option>
+              <option value="2">Weekend Grocery Packaging & Distribution (Metro Food Bank)</option>
+              <option value="4">Winter Warmth Clothing Drive (Metro Food Bank)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="hours-number">Hours Worked</label>
+              <input type="number" id="hours-number" class="form-control" step="0.5" min="0.5" max="24" required value="3.5">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hours-date">Date of Service</label>
+              <input type="date" id="hours-date" class="form-control" required value="2026-10-25">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="hours-description">Brief Description of Tasks Completed</label>
+            <textarea id="hours-description" class="form-control" rows="3" required placeholder="Prepared tree beds, planted saplings, and assisted in clearing weeds..."></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('log-hours-modal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit for Verification</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Create Opportunity (for Organization) -->
+  <div id="create-opportunity-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3>Post New Volunteering Opportunity</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="create-opportunity-form">
+          <div class="form-group">
+            <label class="form-label" for="create-opp-title">Opportunity Title</label>
+            <input type="text" id="create-opp-title" class="form-control" required placeholder="e.g. Community Riverbed Habitat Restoration">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="create-opp-category">Category</label>
+              <select id="create-opp-category" class="form-control">
+                <option value="Environment">Environment</option>
+                <option value="Community Relief">Community Relief</option>
+                <option value="Conservation">Conservation</option>
+                <option value="Humanitarian">Humanitarian</option>
+                <option value="Education">Education</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="create-opp-capacity">Capacity (Volunteers Needed)</label>
+              <input type="number" id="create-opp-capacity" class="form-control" min="1" max="500" value="20" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="create-opp-date">Event Date</label>
+              <input type="date" id="create-opp-date" class="form-control" required value="2026-11-15">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="create-opp-start">Start Time</label>
+              <input type="time" id="create-opp-start" class="form-control" required value="09:00">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="create-opp-end">End Time</label>
+              <input type="time" id="create-opp-end" class="form-control" required value="13:00">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="create-opp-location">Location / Address</label>
+              <input type="text" id="create-opp-location" class="form-control" required placeholder="e.g. Oakridge Park Pavilion">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="create-opp-description">Detailed Description & Volunteer Duties</label>
+            <textarea id="create-opp-description" class="form-control" rows="3" required placeholder="Explain what volunteers will be doing, what to bring, and expectations..."></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('create-opportunity-modal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit for Moderation</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Helper Scripts for UI Interaction -->
+  <script>
+    function fillLoginForm(email, pass) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-password').value = pass;
+    }
+
+    function toggleOrgNameField(val) {
+      document.getElementById('reg-orgname-group').style.display = (val === 'ORGANIZATION') ? 'block' : 'none';
+    }
+
+    function switchDashboardTab(btn, paneId) {
+      const container = btn.closest('.dashboard-view-container');
+      container.querySelectorAll('.dashboard-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      container.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      const targetPane = document.getElementById(paneId);
+      if (targetPane) targetPane.classList.add('active');
+    }
+
+    function openUserDashboard() {
+      if (AppState.currentUser) {
+        if (AppState.currentUser.role === 'VOLUNTEER') navigateTo('volunteer');
+        else if (AppState.currentUser.role === 'ORGANIZATION') navigateTo('organization');
+        else if (AppState.currentUser.role === 'ADMIN') navigateTo('admin');
+      }
+    }
+
+    function filterByCategory(cat) {
+      AppState.activeCategory = cat;
+      document.querySelectorAll('.category-chip').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-category') === cat);
+      });
+      loadOpportunities();
+      const el = document.getElementById('explore-opportunities');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+  <script src="js/app.js?v=1.1.0"></script>
+</body>
+</html>

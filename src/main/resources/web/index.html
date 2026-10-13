@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyVolunteer — Online Volunteer Management Platform</title>
+  <meta name="description" content="Discover meaningful volunteer opportunities, connect with verified nonprofits, log service hours, and create real-world impact.">
+  <link rel="stylesheet" href="css/style.css?v=2.1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ========================================================= -->
+  <!-- INTRO ANIMATION: SPARKLE BEAM REVEAL (LEFT TO RIGHT)       -->
+  <!-- ========================================================= -->
+  <div id="intro-splash" class="intro-splash-overlay">
+    <div class="sparkles-canvas">
+      <span class="sparkle s1">✨</span>
+      <span class="sparkle s2">✦</span>
+      <span class="sparkle s3">✧</span>
+      <span class="sparkle s4">✨</span>
+      <span class="sparkle s5">✦</span>
+      <span class="sparkle s6">✧</span>
+      <span class="sparkle s7">✨</span>
+      <span class="sparkle s8">✦</span>
+    </div>
+    
+    <div class="intro-box">
+      <!-- Sweeping Sparkle Wand / Beam -->
+      <div class="sparkle-wand-sweep" id="sparkle-wand">
+        <span class="wand-star">✨</span>
+        <div class="wand-light-trail"></div>
+      </div>
+
+      <!-- Letter by Letter Written Name -->
+      <div class="intro-name-wrap">
+        <h1 class="intro-animated-title">
+          <span class="spark-char" style="--char-idx: 0;">M</span>
+          <span class="spark-char" style="--char-idx: 1;">y</span>
+          <span class="spark-char char-accent" style="--char-idx: 2;">V</span>
+          <span class="spark-char char-accent" style="--char-idx: 3;">o</span>
+          <span class="spark-char char-accent" style="--char-idx: 4;">l</span>
+          <span class="spark-char char-accent" style="--char-idx: 5;">u</span>
+          <span class="spark-char char-accent" style="--char-idx: 6;">n</span>
+          <span class="spark-char char-accent" style="--char-idx: 7;">t</span>
+          <span class="spark-char char-accent" style="--char-idx: 8;">e</span>
+          <span class="spark-char char-accent" style="--char-idx: 9;">e</span>
+          <span class="spark-char char-accent" style="--char-idx: 10;">r</span>
+        </h1>
+        <p class="intro-animated-sub">Connecting Passion with Purpose &bull; Real Community Impact</p>
+      </div>
+
+      <button type="button" class="btn-skip-splash" onclick="closeIntroSplash()">
+        Enter Platform &rarr;
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- 1. DEDICATED LOGIN / ROLE PORTAL SCREEN                   -->
+  <!-- ========================================================= -->
+  <div id="login-page" class="login-portal-wrapper">
+    <div class="login-portal-bg">
+      <div class="bg-shape shape-1"></div>
+      <div class="bg-shape shape-2"></div>
+      <div class="bg-shape shape-3"></div>
+    </div>
+
+    <div class="login-portal-container">
+      <!-- Portal Brand Header -->
+      <div class="login-header-section">
+        <div class="login-brand-badge">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <span>MYVOLUNTEER</span>
+        </div>
+        <h1 class="login-main-title">Welcome to MyVolunteer</h1>
+        <p class="login-subtitle">Connect with meaningful social causes, empower communities, and track your verified volunteer journey.</p>
+      </div>
+
+      <!-- ROLE CARDS SELECTION (DEFAULT VIEW) -->
+      <div id="role-selection-view" class="role-selection-wrapper">
+        <h2 class="role-selection-heading">Select Your Portal to Continue</h2>
+        <div class="role-grid">
+          
+          <!-- Card 1: Volunteer -->
+          <div class="role-card" onclick="openRoleLogin('VOLUNTEER')">
+            <div class="role-card-icon role-icon-volunteer">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="role-card-badge badge-volunteer">Individual</div>
+            <h3 class="role-card-title">Login as Volunteer</h3>
+            <p class="role-card-desc">Discover inspiring causes, register for community events, log service hours, and earn verified recognition certificates.</p>
+            <ul class="role-card-features">
+              <li>✓ Search real-world events</li>
+              <li>✓ One-click event registration</li>
+              <li>✓ Log & verify service hours</li>
+            </ul>
+            <button class="btn btn-primary btn-role-action" type="button">Enter Volunteer Portal &rarr;</button>
+          </div>
+
+          <!-- Card 2: Organization -->
+          <div class="role-card" onclick="openRoleLogin('ORGANIZATION')">
+            <div class="role-card-icon role-icon-org">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <div class="role-card-badge badge-org">Nonprofit / NGO</div>
+            <h3 class="role-card-title">Login as Organization</h3>
+            <p class="role-card-desc">Publish real-world volunteer opportunities, coordinate active teams, manage applicants, and approve volunteer hours.</p>
+            <ul class="role-card-features">
+              <li>✓ Create & publish opportunities</li>
+              <li>✓ Review volunteer signups</li>
+              <li>✓ Approve & verify hours</li>
+            </ul>
+            <button class="btn btn-secondary btn-role-action" type="button">Enter Organization Portal &rarr;</button>
+          </div>
+
+          <!-- Card 3: Admin -->
+          <div class="role-card" onclick="openRoleLogin('ADMIN')">
+            <div class="role-card-icon role-icon-admin">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="role-card-badge badge-admin">Governance</div>
+            <h3 class="role-card-title">Login as Admin</h3>
+            <p class="role-card-desc">Manage platform security, moderate community postings, review audit logs, and oversee user roles and compliance.</p>
+            <ul class="role-card-features">
+              <li>✓ Moderate listings & causes</li>
+              <li>✓ Manage system permissions</li>
+              <li>✓ Live impact analytics</li>
+            </ul>
+            <button class="btn btn-dark btn-role-action" type="button">Enter Admin Portal &rarr;</button>
+          </div>
+
+          <!-- Card 4: Public Guest -->
+          <div class="role-card role-card-guest" onclick="loginAsGuest()">
+            <div class="role-card-icon role-icon-guest">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="role-card-badge badge-guest">Public Explorer</div>
+            <h3 class="role-card-title">Login as Public Guest</h3>
+            <p class="role-card-desc">Explore live community projects, search nonprofit causes, view impact statistics, and learn how the platform functions.</p>
+            <ul class="role-card-features">
+              <li>✓ Explore all opportunities</li>
+              <li>✓ View community impact</li>
+              <li>✓ No password needed</li>
+            </ul>
+            <button class="btn btn-outline btn-role-action" type="button">Explore as Guest &rarr;</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- INTERACTIVE AUTH FORM (SLIDES IN WHEN ROLE CLICKED) -->
+      <div id="role-auth-view" class="role-auth-wrapper" style="display: none;">
+        <div class="auth-card">
+          <div class="auth-card-top">
+            <button class="btn-back-to-roles" type="button" onclick="backToRoleSelection()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              <span>Back to Roles</span>
+            </button>
+            <div id="auth-role-badge" class="auth-badge">Volunteer Portal</div>
+          </div>
+
+          <h2 id="auth-form-title" class="auth-card-title">Volunteer Sign In</h2>
+          <p id="auth-form-subtitle" class="auth-card-desc">Enter your credentials or use an instant One-Time Passcode (OTP).</p>
+
+          <!-- Quick Fill Demo Bar -->
+          <div class="quick-credentials-box">
+            <span class="quick-cred-label">Quick Demo Fill:</span>
+            <button type="button" class="btn-chip" onclick="quickFillCredentials()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span id="quick-cred-name">Use Demo Account</span>
+            </button>
+          </div>
+
+          <!-- Auth Mode Toggle: Password vs OTP -->
+          <div class="auth-mode-tabs">
+            <button type="button" class="auth-tab-btn active" id="tab-btn-password" onclick="switchAuthMode('password')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Email & Password
+            </button>
+            <button type="button" class="auth-tab-btn" id="tab-btn-otp" onclick="switchAuthMode('otp')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Email & OTP (One-Time Code)
+            </button>
+          </div>
+
+          <!-- Success Notification Banner (e.g. after Registration) -->
+          <div id="auth-success-box" class="auth-alert-success" style="display: none;"></div>
+
+          <!-- OPTION A: Email & Password Form -->
+          <form id="login-form-password" class="auth-fields-form" onsubmit="handlePasswordLogin(event)">
+            <div class="form-group">
+              <label for="login-email-input">Email Address</label>
+              <div class="input-with-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input type="email" id="login-email-input" class="form-input" placeholder="e.g. alice.johnson@example.com" required autocomplete="username">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="login-password-input">Password</label>
+                <a href="javascript:void(0)" onclick="showToast('For demo accounts, use password: Password@123', 'info')" class="text-link-sm">Forgot password?</a>
+              </div>
+              <div class="input-with-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="login-password-input" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+                <button type="button" class="btn-toggle-eye" onclick="togglePasswordVisibility('login-password-input', this)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div id="password-error-box" class="auth-alert-error" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-password-login">
+              Sign In to Account
+            </button>
+          </form>
+
+          <!-- OPTION B: Email & OTP Form -->
+          <div id="login-form-otp-container" class="auth-fields-form" style="display: none;">
+            
+            <!-- OTP Step 1: Request Code -->
+            <div id="otp-step-1">
+              <div class="form-group">
+                <label for="otp-email-input">Registered Email Address</label>
+                <div class="input-with-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <input type="email" id="otp-email-input" class="form-input" placeholder="Enter your registered email" required autocomplete="email">
+                </div>
+              </div>
+              <p class="otp-hint-text">A secure 6-digit passcode will be sent directly to your email inbox. No password needed.</p>
+              <div id="otp-step1-error-box" class="auth-alert-error" style="display: none;"></div>
+              <button type="button" class="btn btn-primary btn-block btn-lg" onclick="handleSendOTP()">
+                Send One-Time Passcode (OTP)
+              </button>
+            </div>
+
+            <!-- OTP Step 2: Verify Code (Locked to Recipient Email, CODE SENT TO EMAIL INBOX) -->
+            <div id="otp-step-2" style="display: none;">
+              <!-- Locked Email Status Badge -->
+              <div class="otp-lock-status">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>OTP Session Locked to: <strong id="otp-locked-email-display">-</strong></span>
+              </div>
+
+              <!-- Passcode Dispatched to Email Banner (CODE NOT SHOWN ON SCREEN) -->
+              <div class="otp-sent-banner">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <div>
+                  <strong style="color: #047857;">OTP Dispatched to Email Inbox!</strong>
+                  <p class="otp-sent-instructions">
+                    We sent a 6-digit verification code to <strong id="otp-target-email-notice">-</strong>. Please check your inbox (or spam folder) and enter the code below.
+                  </p>
+                  <div class="otp-timer-row">
+                    <span id="otp-countdown-timer">⏳ Valid for: <strong id="otp-timer-seconds">02:00</strong></span>
+                    <span class="otp-single-use-badge">Single Use Only</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: 16px;">
+                <label for="otp-code-input">Enter 6-Digit OTP from your email</label>
+                <input type="text" id="otp-code-input" class="form-input text-center otp-input" maxlength="6" placeholder="• • • • • •" autocomplete="off">
+              </div>
+
+              <!-- OTP Error Display Box -->
+              <div id="otp-error-box" class="auth-alert-error" style="display: none;"></div>
+
+              <button type="button" class="btn btn-primary btn-block btn-lg" id="btn-verify-otp" onclick="handleVerifyOTP()">
+                Verify Code & Enter
+              </button>
+
+              <div class="otp-sub-actions">
+                <button type="button" class="btn-resend-otp" onclick="resendOTP()">
+                  Didn't get code? Resend to Email
+                </button>
+                <button type="button" class="btn-cancel-otp" onclick="cancelOTPSession()">
+                  Cancel & Change Email
+                </button>
+              </div>
+
+              <!-- Local Development Simulation Helper (Folded by default) -->
+              <div class="otp-dev-hint-wrapper">
+                <button type="button" class="btn-dev-toggle" onclick="toggleOtpDevHint()">
+                  🔍 Testing in local environment? Click here to view simulator console
+                </button>
+                <div id="otp-dev-code-box" style="display: none;" class="otp-dev-revealed">
+                  <strong>Simulated Email Inbox:</strong> Your code is <span id="otp-dev-secret">------</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Links -->
+          <div class="auth-card-footer">
+            <span>Don't have an account?</span>
+            <button type="button" class="text-link" onclick="openRegisterModalFromLogin()">Register New Account</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- 2. MAIN APPLICATION PLATFORM (SHOWN AFTER AUTHENTICATION) -->
+  <!-- ========================================================= -->
+  <div id="main-app" class="main-app-container" style="display: none;">
+
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="app-header">
+      <div class="header-inner">
+        <!-- Brand Logo -->
+        <a href="javascript:void(0)" class="nav-brand" onclick="navToSection('home-view')">
+          <div class="brand-logo-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="brand-name">My<span class="brand-highlight">Volunteer</span></span>
+          <button type="button" class="btn-replay-sparkles" onclick="playSparkleIntro()" title="Replay intro sparkle animation">✨</button>
+        </a>
+
+        <!-- 5 Nav Buttons: Home, Opportunities, How it works, Organizations, Our Impact -->
+        <nav class="nav-menu">
+          <button type="button" class="nav-btn active" id="nav-btn-home" onclick="navToSection('home')">
+            Home
+          </button>
+          <button type="button" class="nav-btn" id="nav-btn-opportunities" onclick="navToSection('opportunities')">
+            Opportunities
+          </button>
+          <button type="button" class="nav-btn" id="nav-btn-how-it-works" onclick="navToSection('how-it-works')">
+            How It Works
+          </button>
+          <button type="button" class="nav-btn" id="nav-btn-organizations" onclick="navToSection('organizations')">
+            Organizations
+          </button>
+          <button type="button" class="nav-btn" id="nav-btn-our-impact" onclick="navToSection('our-impact')">
+            Our Impact
+          </button>
+        </nav>
+
+        <!-- Right Side: User Controls & Logout -->
+        <div class="header-actions">
+          
+          <!-- Current Active Profile Pill -->
+          <div class="user-profile-badge" id="header-user-badge">
+            <div class="user-avatar-circle" id="header-user-avatar">AJ</div>
+            <div class="user-info-text">
+              <span class="user-display-name" id="header-user-name">Alice Johnson</span>
+              <span class="user-role-label" id="header-user-role">VOLUNTEER</span>
+            </div>
+            
+            <!-- Dashboard Quick Link (if non-guest) -->
+            <button type="button" class="btn-dash-link" id="btn-go-dashboard" onclick="goToCurrentRoleDashboard()" title="Go to Dashboard">
+              Dashboard
+            </button>
+          </div>
+
+          <!-- Dedicated Logout Button -->
+          <button type="button" class="btn btn-outline-danger btn-logout" onclick="handleLogout()" title="Log out of your account">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 1: HOME & PUBLIC SECTIONS (Home / Discover / Impact) -->
+    <!-- ========================================================= -->
+    <main id="home-view" class="view-panel active-panel">
+      
+      <!-- HERO BANNER SECTION -->
+      <section class="hero-section" id="hero-banner">
+        <div class="hero-container">
+          <div class="hero-content">
+            <div class="hero-pill-badge">
+              <span class="pulse-dot"></span>
+              <span>1,200+ Volunteers Active This Week</span>
+            </div>
+            <h1 class="hero-title">Empower Communities.<br><span class="gradient-text">Make Real Impact Today.</span></h1>
+            <p class="hero-description">
+              MyVolunteer bridges verified grassroots nonprofits and dedicated changemakers. Discover hands-on opportunities, track verified volunteer hours, and drive real social change.
+            </p>
+            <div class="hero-cta-group">
+              <button class="btn btn-primary btn-lg" onclick="navToSection('opportunities')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Explore Opportunities
+              </button>
+              <button class="btn btn-secondary-light btn-lg" onclick="navToSection('how-it-works')">
+                Learn How It Works
+              </button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-image-card">
+              <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=80" alt="Volunteers working together" class="hero-img">
+              <div class="floating-stat-card card-top">
+                <div class="stat-icon-sm">🌿</div>
+                <div>
+                  <div class="stat-number-sm">12,450+</div>
+                  <div class="stat-label-sm">Trees Planted</div>
+                </div>
+              </div>
+              <div class="floating-stat-card card-bottom">
+                <div class="stat-icon-sm">🤝</div>
+                <div>
+                  <div class="stat-number-sm">98.6%</div>
+                  <div class="stat-label-sm">Partner Rating</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- IMPACT STATS COUNTERS -->
+      <section class="stats-section" id="our-impact-section">
+        <div class="section-container">
+          <div class="section-badge-center">OUR COLLECTIVE IMPACT</div>
+          <h2 class="section-title text-center">Numbers That Transform Lives</h2>
+          <p class="section-subtitle text-center">Every registered hour is verified by nonprofits to ensure transparency and real measurable outcomes.</p>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-icon-wrap icon-blue">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="stat-metric" id="stat-volunteers">3</div>
+              <div class="stat-name">Active Volunteers</div>
+              <p class="stat-desc">Passionate individuals dedicating their skills</p>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-icon-wrap icon-cyan">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <div class="stat-metric" id="stat-orgs">2</div>
+              <div class="stat-name">Verified Nonprofits</div>
+              <p class="stat-desc">Vetted community organizations and charities</p>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-icon-wrap icon-amber">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="stat-metric" id="stat-hours">7.5 hrs</div>
+              <div class="stat-name">Verified Service Hours</div>
+              <p class="stat-desc">Validated hands-on community service hours</p>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-icon-wrap icon-indigo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div class="stat-metric" id="stat-opportunities">8</div>
+              <div class="stat-name">Live Opportunities</div>
+              <p class="stat-desc">Solving real-world community challenges</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DISCOVER OPPORTUNITIES SEARCH & LISTING SECTION -->
+      <section class="opportunities-section" id="opportunities-section">
+        <div class="section-container">
+          <div class="section-badge-center">REAL-WORLD INITIATIVES</div>
+          <h2 class="section-title text-center">Discover Volunteer Opportunities</h2>
+          <p class="section-subtitle text-center">Browse vetted local and regional causes addressing healthcare, education, disaster relief, environment, and poverty.</p>
+
+          <!-- Search & Filter Controls Bar -->
+          <div class="search-filter-card">
+            <div class="search-inputs-row">
+              <div class="search-field-group">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="search-keyword-input" placeholder="Search by title, cause, or keywords...">
+              </div>
+              
+              <div class="search-field-group field-select">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <select id="search-location-select">
+                  <option value="">All Locations</option>
+                  <option value="Riverside Park">Riverside Park</option>
+                  <option value="Metro Warehouse">Metro Warehouse (Downtown)</option>
+                  <option value="North Shore">North Shore Coastline</option>
+                  <option value="City Hospital">City Hospital Complex</option>
+                  <option value="Eastside">Eastside Community Hall</option>
+                  <option value="Old Town">Old Town Tech Center</option>
+                </select>
+              </div>
+
+              <button class="btn btn-primary" onclick="loadOpportunities()">Search Causes</button>
+              <button class="btn btn-outline" onclick="resetFilters()">Reset</button>
+            </div>
+
+            <!-- Category Filter Chips -->
+            <div class="category-chips-row">
+              <span class="chips-label">Categories:</span>
+              <button class="category-chip active" data-category="All" onclick="selectCategory('All', this)">All Causes</button>
+              <button class="category-chip" data-category="Environment" onclick="selectCategory('Environment', this)">🌱 Environment</button>
+              <button class="category-chip" data-category="Healthcare" onclick="selectCategory('Healthcare', this)">🏥 Healthcare</button>
+              <button class="category-chip" data-category="Education" onclick="selectCategory('Education', this)">📚 Education</button>
+              <button class="category-chip" data-category="Community Relief" onclick="selectCategory('Community Relief', this)">🍲 Community Relief</button>
+              <button class="category-chip" data-category="Disaster Relief" onclick="selectCategory('Disaster Relief', this)">🚨 Disaster Relief</button>
+              <button class="category-chip" data-category="Animal Welfare" onclick="selectCategory('Animal Welfare', this)">🐾 Animal Welfare</button>
+              <button class="category-chip" data-category="Conservation" onclick="selectCategory('Conservation', this)">🌊 Conservation</button>
+            </div>
+          </div>
+
+          <!-- Opportunities Cards Grid -->
+          <div class="opportunities-grid" id="opportunities-container">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS SECTION -->
+      <section class="how-it-works-section" id="how-it-works-section">
+        <div class="section-container">
+          <div class="section-badge-center">SIMPLE & TRANSPARENT PROCESS</div>
+          <h2 class="section-title text-center">How MyVolunteer Works</h2>
+          <p class="section-subtitle text-center">From discovering a verified nonprofit cause to earning recognized service hours in 4 simple steps.</p>
+
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-number">01</div>
+              <div class="step-icon">🔍</div>
+              <h3 class="step-title">Discover & Choose</h3>
+              <p class="step-desc">Search through vetted community causes matching your passions, schedule, and preferred locations.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-number">02</div>
+              <div class="step-icon">📝</div>
+              <h3 class="step-title">One-Click Signup</h3>
+              <p class="step-desc">Register instantly. Get event details, organizer briefing materials, and coordinate with fellow volunteers.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-number">03</div>
+              <div class="step-icon">🤝</div>
+              <h3 class="step-title">Serve & Make Impact</h3>
+              <p class="step-desc">Attend the project, contribute hands-on effort to solve real-world problems, and bond with community leaders.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-number">04</div>
+              <div class="step-icon">🏆</div>
+              <h3 class="step-title">Log & Verify Hours</h3>
+              <p class="step-desc">Submit your service hours for nonprofit verification. Build your verified civic impact portfolio.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURED NONPROFIT ORGANIZATIONS SECTION -->
+      <section class="featured-orgs-section" id="featured-orgs-section">
+        <div class="section-container">
+          <div class="section-badge-center">COMMUNITY PARTNERS</div>
+          <h2 class="section-title text-center">Verified Organizations You Can Trust</h2>
+          <p class="section-subtitle text-center">We vet every registered nonprofit to ensure transparent operations and meaningful volunteer experiences.</p>
+
+          <div class="orgs-grid">
+            <div class="org-card">
+              <div class="org-avatar">🌱</div>
+              <div class="org-meta">
+                <span class="org-badge">Verified Nonprofit</span>
+                <h3 class="org-name">Green Earth Alliance</h3>
+                <p class="org-focus">Environmental Conservation & Urban Reforestation</p>
+                <p class="org-stats"><strong>142</strong> volunteers hosted &bull; <strong>450+</strong> trees planted</p>
+                <button class="btn btn-outline-sm" onclick="filterByOrg('Green Earth Alliance')">View Opportunities</button>
+              </div>
+            </div>
+
+            <div class="org-card">
+              <div class="org-avatar">🍲</div>
+              <div class="org-meta">
+                <span class="org-badge">Verified Nonprofit</span>
+                <h3 class="org-name">Metro Community Food Bank</h3>
+                <p class="org-focus">Food Security, Hunger Relief & Nutrition Access</p>
+                <p class="org-stats"><strong>210</strong> volunteers hosted &bull; <strong>18,000+</strong> meals provided</p>
+                <button class="btn btn-outline-sm" onclick="filterByOrg('Metro Community Food Bank')">View Opportunities</button>
+              </div>
+            </div>
+
+            <div class="org-card">
+              <div class="org-avatar">🏥</div>
+              <div class="org-meta">
+                <span class="org-badge">Verified Nonprofit</span>
+                <h3 class="org-name">City Hope Healthcare</h3>
+                <p class="org-focus">Public Health Outreach & Hospital Support</p>
+                <p class="org-stats"><strong>95</strong> volunteers hosted &bull; <strong>1,200+</strong> patients aided</p>
+                <button class="btn btn-outline-sm" onclick="filterByOrg('City Hope Healthcare')">View Opportunities</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALL TO ACTION SECTION -->
+      <section class="cta-banner-section">
+        <div class="section-container">
+          <div class="cta-box">
+            <div class="cta-text">
+              <h2>Ready to Make a Real Difference?</h2>
+              <p>Join thousands of dedicated volunteers and verified nonprofits creating positive change today.</p>
+            </div>
+            <div class="cta-actions">
+              <button class="btn btn-primary btn-lg" onclick="navToSection('opportunities')">Find Opportunities Now</button>
+              <button class="btn btn-outline btn-lg" onclick="openRegisterModal()">Register Your Nonprofit</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 2: VOLUNTEER DASHBOARD                               -->
+    <!-- ========================================================= -->
+    <section id="volunteer-view" class="view-panel dashboard-panel">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <div>
+            <h1 class="dash-title">Volunteer Hub</h1>
+            <p class="dash-subtitle">Track your upcoming registrations, log completed service hours, and view verified credits.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn btn-primary" onclick="openModal('log-hours-modal')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Log Service Hours
+            </button>
+            <button class="btn btn-outline" onclick="navToSection('opportunities')">
+              Browse More Events
+            </button>
+          </div>
+        </div>
+
+        <!-- Volunteer Summary Stats Cards -->
+        <div class="dashboard-stats-row">
+          <div class="dash-stat-card">
+            <div class="dash-stat-label">Verified Hours</div>
+            <div class="dash-stat-val" id="vol-verified-hours">0.0 hrs</div>
+            <div class="dash-stat-sub">Official approved service</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-label">Active Signups</div>
+            <div class="dash-stat-val" id="vol-active-signups">0</div>
+            <div class="dash-stat-sub">Upcoming volunteer events</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-label">Completed Events</div>
+            <div class="dash-stat-val" id="vol-completed-events">0</div>
+            <div class="dash-stat-sub">Community causes served</div>
+          </div>
+        </div>
+
+        <!-- Two Column Content Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Column: Active Signups -->
+          <div class="card-box">
+            <div class="card-box-header">
+              <h2 class="card-box-title">My Registered Events</h2>
+              <span class="badge" id="vol-signups-count-badge">0 Registered</span>
+            </div>
+            <div class="table-responsive">
+              <div id="volunteer-signups-container" class="dashboard-list">
+                <p class="empty-state-text">No active event signups found. Explore opportunities to join one!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Hour Logs History -->
+          <div class="card-box">
+            <div class="card-box-header">
+              <h2 class="card-box-title">Logged Hours History</h2>
+              <button class="btn btn-sm btn-outline" onclick="openModal('log-hours-modal')">+ Log Hours</button>
+            </div>
+            <div class="table-responsive">
+              <div id="volunteer-hours-container" class="dashboard-list">
+                <p class="empty-state-text">No hours logged yet.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 3: ORGANIZATION DASHBOARD                            -->
+    <!-- ========================================================= -->
+    <section id="organization-view" class="view-panel dashboard-panel">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <div>
+            <h1 class="dash-title">Organization Management Console</h1>
+            <p class="dash-subtitle">Manage your published causes, review incoming volunteer applicants, and verify service hours.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn btn-primary" onclick="openModal('create-opportunity-modal')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Post New Opportunity
+            </button>
+          </div>
+        </div>
+
+        <!-- Org Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Published Opportunities Management -->
+          <div class="card-box">
+            <div class="card-box-header">
+              <h2 class="card-box-title">Our Published Opportunities</h2>
+              <button class="btn btn-sm btn-primary" onclick="openModal('create-opportunity-modal')">+ Post New</button>
+            </div>
+            <div id="org-opportunities-container" class="dashboard-list">
+              <p class="empty-state-text">Loading organization listings...</p>
+            </div>
+          </div>
+
+          <!-- Pending Volunteer Hours Verification -->
+          <div class="card-box">
+            <div class="card-box-header">
+              <h2 class="card-box-title">Pending Hours To Verify</h2>
+              <span class="badge badge-warning" id="org-pending-badge">Verification Queue</span>
+            </div>
+            <div id="org-hours-verification-container" class="dashboard-list">
+              <p class="empty-state-text">No pending hours awaiting verification.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 4: ADMIN GOVERNANCE DASHBOARD                        -->
+    <!-- ========================================================= -->
+    <section id="admin-view" class="view-panel dashboard-panel">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <div>
+            <h1 class="dash-title">System Governance & Moderation</h1>
+            <p class="dash-subtitle">Review new community opportunities, monitor safety, and manage user accounts.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn btn-outline" onclick="loadAdminData()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              Refresh Console
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Opportunity Moderation Queue -->
+          <div class="card-box">
+            <div class="card-box-header">
+              <h2 class="card-box-title">Listing Moderation Queue</h2>
+              <span class="badge badge-primary">Moderator Review</span>
+            </div>
+            <div id="admin-moderation-container" class="dashboard-list">
+              <p class="empty-state-text">No items pending moderation.</p>
+            </div>
+          </div>
+
+          <!-- Platform User Accounts Management -->
+          <div class="card-box">
+            <div class="card-box-header">
+              <h2 class="card-box-title">User Accounts Directory</h2>
+              <span class="badge" id="admin-users-count">All Users</span>
+            </div>
+            <div id="admin-users-container" class="dashboard-list">
+              <p class="empty-state-text">Loading platform users...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="brand-logo-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="brand-name">My<span class="brand-highlight">Volunteer</span></span>
+          <button type="button" class="btn-replay-sparkles" onclick="playSparkleIntro()" title="Replay intro sparkle animation">✨</button>
+            <p class="footer-tagline">Connecting passion with purpose to power sustainable community development worldwide.</p>
+          </div>
+          <div class="footer-links-col">
+            <h4>Navigation</h4>
+            <a href="javascript:void(0)" onclick="navToSection('home')">Home</a>
+            <a href="javascript:void(0)" onclick="navToSection('opportunities')">Opportunities</a>
+            <a href="javascript:void(0)" onclick="navToSection('how-it-works')">How It Works</a>
+            <a href="javascript:void(0)" onclick="navToSection('organizations')">Organizations</a>
+            <a href="javascript:void(0)" onclick="navToSection('our-impact')">Our Impact</a>
+          </div>
+          <div class="footer-links-col">
+            <h4>Portals</h4>
+            <a href="javascript:void(0)" onclick="switchPortalFromFooter('VOLUNTEER')">Volunteer Portal</a>
+            <a href="javascript:void(0)" onclick="switchPortalFromFooter('ORGANIZATION')">Organization Portal</a>
+            <a href="javascript:void(0)" onclick="switchPortalFromFooter('ADMIN')">Admin Portal</a>
+            <a href="javascript:void(0)" onclick="openRegisterModal()">Register Nonprofit</a>
+          </div>
+          <div class="footer-links-col">
+            <h4>Support</h4>
+            <a href="javascript:void(0)" onclick="showToast('MyVolunteer 24/7 Support: support@myvolunteer.org', 'info')">Help Center</a>
+            <a href="javascript:void(0)" onclick="showToast('All listed charities are vetted for 501(c)(3) / NGO status.', 'info')">Verification Guidelines</a>
+            <a href="javascript:void(0)" onclick="showToast('Your privacy and data are secure with MyVolunteer.', 'info')">Privacy Policy</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 MyVolunteer Platform. Designed with Sky Blue Theme &bull; All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- MODALS (DETAILS, LOG HOURS, POST OPP, REGISTER)          -->
+  <!-- ========================================================= -->
+
+  <!-- Modal 1: Opportunity Details & Registration -->
+  <div class="modal-overlay" id="opp-details-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('opp-details-modal')">&times;</button>
+      <div class="modal-opp-header">
+        <img id="modal-opp-img" src="" alt="Opportunity Banner" class="modal-opp-banner">
+      </div>
+      <div class="modal-opp-body">
+        <div class="modal-tags-row">
+          <span class="badge badge-primary" id="modal-opp-category">Environment</span>
+          <span class="badge badge-success">Verified Nonprofit</span>
+        </div>
+        <h2 id="modal-opp-title" class="modal-opp-heading">Event Title</h2>
+        <div class="modal-meta-grid">
+          <div><strong>Organization:</strong> <span id="modal-opp-org">-</span></div>
+          <div><strong>Date & Time:</strong> <span id="modal-opp-date">-</span></div>
+          <div><strong>Location:</strong> <span id="modal-opp-loc">-</span></div>
+          <div><strong>Availability:</strong> <span id="modal-opp-capacity">-</span></div>
+        </div>
+        <div class="modal-desc-box">
+          <h4>About this Opportunity</h4>
+          <p id="modal-opp-desc">Description text...</p>
+        </div>
+        <div class="modal-actions-row">
+          <button class="btn btn-outline" onclick="closeModal('opp-details-modal')">Close</button>
+          <button class="btn btn-primary btn-lg" id="modal-opp-signup-btn">Sign Up for Opportunity</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Log Volunteer Hours -->
+  <div class="modal-overlay" id="log-hours-modal">
+    <div class="modal-card modal-card-sm">
+      <button class="modal-close-btn" onclick="closeModal('log-hours-modal')">&times;</button>
+      <h2 class="modal-heading">Log Volunteer Service Hours</h2>
+      <p class="modal-sub">Submit your hours to the hosting organization for official verification.</p>
+      
+      <form id="log-hours-form">
+        <div class="form-group">
+          <label for="hours-opp-select">Select Completed Opportunity</label>
+          <select id="hours-opp-select" class="form-input" required>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="hours-number">Number of Hours Worked</label>
+          <input type="number" id="hours-number" class="form-input" step="0.5" min="0.5" max="24" placeholder="e.g. 4.0" required>
+        </div>
+        <div class="form-group">
+          <label for="hours-date">Date of Service</label>
+          <input type="date" id="hours-date" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="hours-description">Brief Description of Work Performed</label>
+          <textarea id="hours-description" class="form-input" rows="3" placeholder="What tasks did you complete during this session?" required></textarea>
+        </div>
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-outline" onclick="closeModal('log-hours-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Hours for Verification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Post Opportunity (For Organizations) -->
+  <div class="modal-overlay" id="create-opportunity-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('create-opportunity-modal')">&times;</button>
+      <h2 class="modal-heading">Post New Volunteer Opportunity</h2>
+      <p class="modal-sub">Create a new listing for volunteers to discover and join.</p>
+      
+      <form id="create-opportunity-form">
+        <div class="form-group">
+          <label for="create-opp-title">Opportunity Title</label>
+          <input type="text" id="create-opp-title" class="form-input" placeholder="e.g. Emergency Flood Relief Supply Distribution" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="create-opp-category">Category</label>
+            <select id="create-opp-category" class="form-input" required>
+              <option value="Environment">Environment</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Education">Education</option>
+              <option value="Community Relief">Community Relief</option>
+              <option value="Disaster Relief">Disaster Relief</option>
+              <option value="Animal Welfare">Animal Welfare</option>
+              <option value="Conservation">Conservation</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="create-opp-capacity">Volunteer Capacity (Spots)</label>
+            <input type="number" id="create-opp-capacity" class="form-input" min="1" max="500" value="25" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="create-opp-date">Event Date</label>
+            <input type="date" id="create-opp-date" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="create-opp-start">Start Time</label>
+            <input type="time" id="create-opp-start" class="form-input" value="09:00" required>
+          </div>
+          <div class="form-group">
+            <label for="create-opp-end">End Time</label>
+            <input type="time" id="create-opp-end" class="form-input" value="13:00" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="create-opp-location">Location / Venue</label>
+          <input type="text" id="create-opp-location" class="form-input" placeholder="e.g. Eastside Community Hall, Room 102" required>
+        </div>
+        <div class="form-group">
+          <label for="create-opp-description">Detailed Description & Requirements</label>
+          <textarea id="create-opp-description" class="form-input" rows="4" placeholder="Describe the mission, tasks, requirements, and items volunteers should bring..." required></textarea>
+        </div>
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-outline" onclick="closeModal('create-opportunity-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Opportunity</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Register New Account -->
+  <div class="modal-overlay" id="register-modal">
+    <div class="modal-card modal-card-sm">
+      <button class="modal-close-btn" onclick="closeModal('register-modal')">&times;</button>
+      <h2 class="modal-heading">Create New Account</h2>
+      <p class="modal-sub">Join as a volunteer or register your nonprofit organization.</p>
+      
+      <form id="register-form">
+        <div class="form-group">
+          <label for="reg-fullname">Full Name / Contact Person</label>
+          <input type="text" id="reg-fullname" class="form-input" placeholder="e.g. Jane Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Email Address</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="e.g. jane@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="reg-password">Password</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="Minimum 6 characters" required>
+        </div>
+        <div class="form-group">
+          <label for="reg-role">Account Type</label>
+          <select id="reg-role" class="form-input" onchange="toggleOrgNameField(this.value)" required>
+            <option value="VOLUNTEER">Volunteer (Individual)</option>
+            <option value="ORGANIZATION">Organization (Nonprofit / NGO)</option>
+          </select>
+        </div>
+        <div class="form-group" id="reg-orgname-group" style="display: none;">
+          <label for="reg-orgname">Organization / Charity Legal Name</label>
+          <input type="text" id="reg-orgname" class="form-input" placeholder="e.g. Community Health Coalition">
+        </div>
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-outline" onclick="closeModal('register-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- MODAL: REAL PROGRAM REGISTRATION MODAL                   -->
+  <!-- ========================================================= -->
+  <div class="modal-overlay" id="program-register-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('program-register-modal')">&times;</button>
+      
+      <div class="program-reg-header">
+        <span class="badge badge-primary" id="reg-program-category">Community Initiative</span>
+        <h2 class="modal-heading" id="reg-program-title">Register for Program</h2>
+        <div class="program-meta-strip">
+          <div>🏢 <strong id="reg-program-org">-</strong></div>
+          <div>📅 <span id="reg-program-date">-</span></div>
+          <div>📍 <span id="reg-program-location">-</span></div>
+          <div>👥 <span id="reg-program-slots" class="text-primary font-bold">-</span></div>
+        </div>
+      </div>
+
+      <p class="modal-sub">Please complete the required registration details below. Your information will be securely submitted to the organizing nonprofit partner.</p>
+
+      <form id="program-registration-form" onsubmit="handleConfirmProgramRegistration(event)">
+        <input type="hidden" id="reg-program-id" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-vol-name">Volunteer Full Name *</label>
+            <input type="text" id="reg-vol-name" class="form-input" required placeholder="e.g. Alice Johnson">
+          </div>
+          <div class="form-group">
+            <label for="reg-vol-email">Email Address *</label>
+            <input type="email" id="reg-vol-email" class="form-input" required placeholder="e.g. alice@example.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-vol-phone">Contact Phone Number *</label>
+            <input type="tel" id="reg-vol-phone" class="form-input" required placeholder="e.g. +1 (555) 234-5678">
+          </div>
+          <div class="form-group">
+            <label for="reg-vol-emergency">Emergency Contact (Name & Phone) *</label>
+            <input type="text" id="reg-vol-emergency" class="form-input" required placeholder="e.g. John Johnson (+1 555-888-9999)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-vol-skills">Relevant Skills & Experience (Optional)</label>
+          <input type="text" id="reg-vol-skills" class="form-input" placeholder="e.g. First Aid Certified, Event Logistics, Gardening, Driving License">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-vol-notes">Special Dietary or Accessibility Needs (Optional)</label>
+          <textarea id="reg-vol-notes" class="form-input" rows="2" placeholder="Any allergies, mobility assistance, or dietary preferences..."></textarea>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="reg-vol-agree" required checked>
+            <span>I confirm my commitment to attend this event on time and adhere to MyVolunteer Community Safety Guidelines.</span>
+          </label>
+        </div>
+
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-outline" onclick="closeModal('program-register-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-lg">
+            Confirm & Complete Registration &rarr;
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: ADMIN REJECTION REASON MODAL                       -->
+  <!-- ========================================================= -->
+  <div class="modal-overlay" id="admin-rejection-modal">
+    <div class="modal-card modal-card-sm">
+      <button class="modal-close-btn" onclick="closeModal('admin-rejection-modal')">&times;</button>
+      <h2 class="modal-heading" style="color: #DC2626;">Reject Opportunity Listing</h2>
+      <p class="modal-sub">Please select or provide the reason for rejecting this community submission.</p>
+
+      <form id="admin-reject-form" onsubmit="confirmAdminRejection(event)">
+        <input type="hidden" id="admin-reject-opp-id" value="">
+
+        <div class="form-group">
+          <label for="admin-reject-preset">Common Reason</label>
+          <select id="admin-reject-preset" class="form-input" onchange="applyPresetRejectionReason(this.value)">
+            <option value="Incomplete event details and safety guidelines">Incomplete event details and safety guidelines</option>
+            <option value="Unverified nonprofit credentials or missing tax documentation">Unverified nonprofit credentials or missing tax documentation</option>
+            <option value="Event date or venue conflicts with regional platform schedule">Event date or venue conflicts with regional platform schedule</option>
+            <option value="Listing does not comply with volunteer safety policies">Listing does not comply with volunteer safety policies</option>
+            <option value="CUSTOM">Custom reason...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="admin-reject-notes">Detailed Feedback for Organization *</label>
+          <textarea id="admin-reject-notes" class="form-input" rows="3" required placeholder="Explain why the listing was rejected..."></textarea>
+        </div>
+
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-outline" onclick="closeModal('admin-rejection-modal')">Cancel</button>
+          <button type="submit" class="btn btn-outline-danger">Confirm Rejection</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- App Core JavaScript -->
+  <script src="js/app.js?v=2.1.0"></script>
+</body>
+</html>

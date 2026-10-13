@@ -33,7 +33,25 @@ public class Main {
                     ConnectionTest.main(args);
                     return;
                 }
+                case "--web" -> {
+                    try {
+                        com.volunteer.web.WebServer.startServer(8080);
+                        System.out.println("Press Ctrl+C to terminate web server.");
+                        Thread.currentThread().join();
+                    } catch (Exception e) {
+                        System.err.println("Web server error: " + e.getMessage());
+                    }
+                    return;
+                }
             }
+        }
+
+        // Start embedded Web Server in background for instant web access at http://localhost:8080
+        try {
+            int port = com.volunteer.web.WebServer.startServer(8080);
+            System.out.println("[WEB UI] Responsive Volunteer Web Platform available at: http://localhost:" + port);
+        } catch (Exception e) {
+            System.err.println("[WARN] Could not start embedded web server on port 8080: " + e.getMessage());
         }
 
         // Default: Launch the Modern Java Swing Desktop Application
@@ -42,10 +60,23 @@ public class Main {
         // Setup FlatLaf Modern Theme
         UITheme.setupLookAndFeel();
 
-        // Launch GUI safely on Swing Event Dispatch Thread (EDT)
-        SwingUtilities.invokeLater(() -> {
-            LoginFrame loginFrame = new LoginFrame();
-            loginFrame.setVisible(true);
-        });
+        // Launch GUI safely on Swing Event Dispatch Thread (EDT) if graphical environment is available
+        boolean isHeadless = java.awt.GraphicsEnvironment.isHeadless();
+        if (!isHeadless) {
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    LoginFrame loginFrame = new LoginFrame();
+                    loginFrame.setVisible(true);
+                } catch (Throwable t) {
+                    System.out.println("[INFO] Running in server mode. Web platform is available at: http://localhost:8080");
+                }
+            });
+        } else {
+            System.out.println("[INFO] Headless environment detected. Serving web platform at: http://localhost:8080");
+            try {
+                // Keep the server process alive indefinitely
+                Thread.currentThread().join();
+            } catch (InterruptedException ignored) {}
+        }
     }
 }

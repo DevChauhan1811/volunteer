@@ -24,26 +24,28 @@ import java.awt.RenderingHints;
  */
 public final class UITheme {
 
-    // --- Curated Color Palette ---
-    public static final Color PRIMARY = new Color(37, 99, 235);       // Royal Blue #2563EB
-    public static final Color PRIMARY_HOVER = new Color(29, 78, 216); // Darker Blue #1D4ED8
-    public static final Color PRIMARY_LIGHT = new Color(239, 246, 255);// Soft Blue tint
-    public static final Color SUCCESS = new Color(22, 163, 74);       // Emerald Green #16A34A
+    // --- Curated Color Palette (Forest Green, Emerald & Warm Orange) ---
+    public static final Color PRIMARY = new Color(23, 107, 77);        // Deep Forest Green #176B4D
+    public static final Color PRIMARY_HOVER = new Color(17, 83, 59);  // Darker Forest #11533B
+    public static final Color PRIMARY_LIGHT = new Color(232, 245, 238);// Soft Green tint #E8F5EE
+    public static final Color SECONDARY = new Color(40, 168, 121);     // Emerald Green #28A879
+    public static final Color ACCENT = new Color(244, 162, 97);        // Warm Orange #F4A261
+    public static final Color SUCCESS = new Color(40, 168, 121);       // Emerald Green #28A879
     public static final Color SUCCESS_LIGHT = new Color(240, 253, 244);
-    public static final Color DANGER = new Color(220, 38, 38);        // Crimson Red #DC2626
+    public static final Color DANGER = new Color(220, 38, 38);         // Crimson Red #DC2626
     public static final Color DANGER_LIGHT = new Color(254, 242, 242);
-    public static final Color WARNING = new Color(217, 119, 6);       // Amber #D97706
-    public static final Color WARNING_LIGHT = new Color(254, 252, 232);
+    public static final Color WARNING = new Color(244, 162, 97);       // Warm Orange #F4A261
+    public static final Color WARNING_LIGHT = new Color(254, 247, 237);
 
-    public static final Color BG_MAIN = new Color(248, 250, 252);     // Slate 50 #F8FAFC
-    public static final Color BG_CARD = Color.WHITE;
-    public static final Color BG_SIDEBAR = new Color(15, 23, 42);     // Dark Slate #0F172A
-    public static final Color SIDEBAR_HOVER = new Color(30, 41, 59);
+    public static final Color BG_MAIN = new Color(247, 249, 247);      // Soft off-white #F7F9F7
+    public static final Color BG_CARD = Color.WHITE;                   // Surface #FFFFFF
+    public static final Color BG_SIDEBAR = new Color(15, 45, 32);      // Deep Spruce #0F2D20
+    public static final Color SIDEBAR_HOVER = new Color(23, 66, 48);
 
-    public static final Color TEXT_MAIN = new Color(15, 23, 42);      // Slate 900
-    public static final Color TEXT_MUTED = new Color(100, 116, 139);  // Slate 500
-    public static final Color TEXT_LIGHT = new Color(241, 245, 249);  // Slate 100
-    public static final Color BORDER = new Color(226, 232, 240);      // Slate 200
+    public static final Color TEXT_MAIN = new Color(31, 41, 51);       // Dark charcoal #1F2933
+    public static final Color TEXT_MUTED = new Color(107, 114, 128);   // Muted gray #6B7280
+    public static final Color TEXT_LIGHT = new Color(241, 245, 249);   // Slate 100
+    public static final Color BORDER = new Color(227, 234, 229);       // Light gray-green #E3EAE5
 
     // --- Modern Typography ---
     private static final String FONT_FAMILY = "Segoe UI";

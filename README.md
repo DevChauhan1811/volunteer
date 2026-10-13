@@ -1,4 +1,4 @@
-# 🌟 MyVolunteer — Community Volunteer Management Platform
+# 🌟 MyVolunteer — Online Volunteer Management Platform
 
 [![Java 21](https://img.shields.io/badge/Java-21%20LTS-007396?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Maven](https://img.shields.io/badge/Apache%20Maven-3.9+-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
